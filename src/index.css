@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..900;1,9..40,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-syne: "Syne", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Sky — Primary accent */
+  --color-sky-400: #38bdf8;
+  --color-sky-500: #0ea5e9;
+  --color-sky-600: #0284c7;
+
+  /* Violet — Secondary accent */
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+
+  /* Zinc — Base (dark theme) */
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-600: #52525b;
+  --color-zinc-500: #71717a;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-50: #fafafa;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CSS CUSTOM PROPERTIES — Design tokens from AGENT.md
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Background */
+  --bg-primary: #09090b; /* zinc-950 — main page background */
+  --bg-card: #18181b; /* zinc-900 — card / surface */
+  --bg-elevated: #27272a; /* zinc-800 — elevated card */
+
+  /* Borders */
+  --border-default: #27272a; /* zinc-800 */
+  --border-subtle: #3f3f46; /* zinc-700 */
+
+  /* Text */
+  --text-heading: #f4f4f5; /* zinc-100 */
+  --text-body: #a1a1aa; /* zinc-400 */
+  --text-muted: #71717a; /* zinc-500 */
+
+  /* Primary accent — Sky */
+  --accent-sky: #38bdf8; /* sky-400 */
+  --accent-sky-base: #0ea5e9; /* sky-500 */
+  --accent-sky-hover: #0284c7; /* sky-600 */
+
+  /* Secondary accent — Violet */
+  --accent-violet: #a78bfa; /* violet-400 */
+  --accent-violet-base: #8b5cf6; /* violet-500 */
+  --accent-violet-hover: #7c3aed; /* violet-600 */
+
+  /* Gradient accent — from AGENT.md */
+  --gradient-accent: linear-gradient(135deg, #0ea5e9, #8b5cf6, #38bdf8);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   KEYFRAMES
+   ───────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE STYLES
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    /* Lenis overrides scroll-behavior — keep this 'auto' */
+    scroll-behavior: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-heading);
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Text selection */
+  ::selection {
+    background: rgba(14, 165, 233, 0.3);
+    color: var(--text-heading);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-subtle);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-sky-base);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   UTILITIES (Tailwind v4 style)
+   ───────────────────────────────────────────────────────────── */
+
+@utility text-gradient {
+  background: linear-gradient(135deg, #38bdf8, #8b5cf6, #38bdf8);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility glass {
+  background: rgba(24, 24, 27, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(39, 39, 42, 0.8);
+}
+
+@utility glow-sky {
+  box-shadow:
+    0 0 30px rgba(14, 165, 233, 0.15),
+    0 0 60px rgba(14, 165, 233, 0.05);
+}
+
+@utility glow-violet {
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.15),
+    0 0 60px rgba(139, 92, 246, 0.05);
+}
+
+@utility section-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @media (min-width: 768px) {
+    padding: 0 3rem;
+  }
+  @media (min-width: 1280px) {
+    padding: 0 4rem;
+  }
+}
+
+@utility noise-overlay {
+  &::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   REDUCED MOTION
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
